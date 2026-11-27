@@ -11,3 +11,6 @@ WORKDIR /app
 
 # Expose port (Vercel akan otomatis mendeteksi ini)
 EXPOSE 80
+
+# PERINTAH SAKTI: Jalankan FrankenPHP dengan Caddyfile kita
+CMD ["frankenphp", "run", "--config", "/app/Caddyfile", "--adapter", "caddyfile"]
