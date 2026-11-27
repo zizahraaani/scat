@@ -175,11 +175,19 @@ function formatRupiah($angka) {
    LOGO DAN HEADER
 ========================= */
 $logo_html = '';
+// Path absolut ke file logo.png di folder yang sama
 $logo_path = __DIR__ . '/logo.png';
+
 if (file_exists($logo_path)) {
-    // Untuk mPDF, gunakan base64 encoded image
-    $logo_data = base64_encode(file_get_contents($logo_path));
-    $logo_html = '<img src="data:image/png;base64,'.$logo_data.'" style="height:40px;">';
+    // LANGSUNG GUNAKAN PATH FILE, BUKAN BASE64
+    // Ini cara paling stabil untuk mPDF di server Vercel (Linux)
+    $logo_html = '<img src="' . $logo_path . '" style="height:40px;">';
+} else {
+    // Jika logo tidak ketemu, coba cari di folder assets (jaga-jaga)
+    $logo_path_alt = __DIR__ . '/assets/logo.png';
+    if (file_exists($logo_path_alt)) {
+        $logo_html = '<img src="' . $logo_path_alt . '" style="height:40px;">';
+    }
 }
 
 // Nama perusahaan dari identitas atau default
@@ -923,10 +931,6 @@ if (!empty($can_terfilter)) {
    TABEL 11: TINDAKAN PERBAIKAN DAN PENCEGAHAN
 ============================= */
 
-/* ==============================
-   TABEL 11: TINDAKAN PERBAIKAN DAN PENCEGAHAN
-============================= */
-
 $html .= '
 <div class="table-container">
 <table class="tindakan-grid">
@@ -1043,21 +1047,23 @@ $html .= '</div></body></html>';
    GENERATE PDF DENGAN MPDF
 ========================= */
 try {
-    // Buat instance mPDF dengan konfigurasi untuk A4
+    // Pastikan folder tmp ada dan writable
+    if (!is_dir(__DIR__ . '/tmp')) {
+        mkdir(__DIR__ . '/tmp', 0777, true);
+    }
     
-      $mpdf = new \Mpdf\Mpdf([
-    'mode' => 'utf-8',
-    'format' => 'A4',
-    'orientation' => 'P',
-    'margin_top' => 20,
-    'margin_right' => 15,
-    'margin_bottom' => 20,
-    'margin_left' => 15,
-    'margin_header' => 5,
-    'margin_footer' => 10,
-    'default_font' => 'arial',
-
-        'tempDir' => __DIR__ . '/tmp' // Pastikan folder tmp ada dan writable
+    $mpdf = new \Mpdf\Mpdf([
+        'mode' => 'utf-8',
+        'format' => 'A4',
+        'orientation' => 'P',
+        'margin_top' => 20,
+        'margin_right' => 15,
+        'margin_bottom' => 20,
+        'margin_left' => 15,
+        'margin_header' => 5,
+        'margin_footer' => 10,
+        'default_font' => 'arial',
+        'tempDir' => __DIR__ . '/tmp'
     ]);
     
     // Set metadata
