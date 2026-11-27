@@ -4,5 +4,7 @@
 
 :80 {
     root * /app
-    php_server
+    php_server {
+        try_files {path} /login.php
+    }
 }
