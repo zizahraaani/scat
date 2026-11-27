@@ -8,6 +8,10 @@
   },
   "rewrites": [
     {
+      "source": "/",
+      "destination": "/login.php"
+    },
+    {
       "source": "/(.*)",
       "destination": "/app/$1"
     }
