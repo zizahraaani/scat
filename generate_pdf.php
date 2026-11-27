@@ -172,21 +172,19 @@ function formatRupiah($angka) {
 }
 
 /* =========================
-   LOGO DAN HEADER
+   LOGO DAN HEADER (UPDATED KE JPG)
 ========================= */
 $logo_html = '';
-// Path absolut ke file logo.png di folder yang sama
-$logo_path = __DIR__ . '/logo.png';
+// Path absolut ke file logo_pt.jpg di folder yang sama
+$logo_path = __DIR__ . '/logo_pt.jpg';
 
 if (file_exists($logo_path)) {
-    // LANGSUNG GUNAKAN PATH FILE, BUKAN BASE64
-    // Ini cara paling stabil untuk mPDF di server Vercel (Linux)
-    $logo_html = '<img src="' . $logo_path . '" style="height:40px;">';
-} else {
-    // Jika logo tidak ketemu, coba cari di folder assets (jaga-jaga)
-    $logo_path_alt = __DIR__ . '/assets/logo.png';
-    if (file_exists($logo_path_alt)) {
-        $logo_html = '<img src="' . $logo_path_alt . '" style="height:40px;">';
+    // Ambil info gambar untuk memastikan formatnya valid (JPG/JPEG)
+    $image_info = getimagesize($logo_path);
+    if ($image_info !== false) {
+        $mime = $image_info['mime']; // Otomatis mendeteksi image/jpeg
+        $logo_data = base64_encode(file_get_contents($logo_path));
+        $logo_html = '<img src="data:' . $mime . ';base64,' . $logo_data . '" style="height:40px;">';
     }
 }
 
