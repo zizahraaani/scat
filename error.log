@@ -1,0 +1,4 @@
+[22-Dec-2025 04:39:07 Europe/Berlin] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\scat\form_input_scat.php on line 12
+[22-Dec-2025 04:39:07 Europe/Berlin] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\scat\form_input_scat.php on line 13
+[22-Dec-2025 04:39:07 Europe/Berlin] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\scat\form_input_scat.php on line 14
+[22-Dec-2025 04:39:07 Europe/Berlin] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in C:\xampp\htdocs\scat\form_input_scat.php on line 15
